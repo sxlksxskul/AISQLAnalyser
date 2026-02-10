@@ -1,0 +1,197 @@
+Backend Class Documentation
+=============================
+
+This document explains the purpose and functionality of each Java class in the SQL Query Analyser Backend.
+
+PROJECT STRUCTURE
+-----------------
+backend/src/main/java/com/sqlanalyzer/
+├── SqlQueryAnalyserApplication.java    # Main application entry point
+├── config/
+│   └── OllamaConfig.java              # Ollama AI model configuration
+├── controller/
+│   └── SqlQueryAnalysisController.java # REST API endpoints
+├── model/
+│   ├── AnalysisResult.java            # Individual analysis result model
+│   ├── Rating.java                    # Rating enum (green/amber/red)
+│   ├── SqlQueryAnalysisResponse.java  # API response wrapper
+│   └── SqlQueryRequest.java           # API request model
+└── service/
+    └── SqlQueryAnalysisService.java   # Core business logic
+
+
+CLASS DESCRIPTIONS
+==================
+
+1. SqlQueryAnalyserApplication.java
+----------------------------------
+PURPOSE: Main Spring Boot application entry point
+RESPONSIBILITIES:
+- Bootstraps the entire Spring Boot application
+- Configures CORS to allow requests from React frontend (port 5173)
+- Contains the main() method that starts the server
+
+KEY FEATURES:
+- @SpringBootApplication annotation enables auto-configuration
+- @CrossOrigin allows frontend integration
+- Runs on port 8080 by default
+
+
+2. config/OllamaConfig.java
+---------------------------
+PURPOSE: Configuration class for Ollama AI integration
+RESPONSIBILITIES:
+- Creates and configures the ChatLanguageModel bean for dependency injection
+- Sets up connection parameters for local Ollama server
+- Defines AI model settings (temperature, timeout, etc.)
+
+KEY FEATURES:
+- Uses @Configuration and @Bean annotations for Spring configuration
+- Configurable via application.properties (base URL, model name, timeout)
+- Currently configured for Gemma 3:4b model
+- Low temperature (0.1) for consistent analysis results
+
+
+3. controller/SqlQueryAnalysisController.java
+--------------------------------------------
+PURPOSE: REST API layer handling HTTP requests and responses
+RESPONSIBILITIES:
+- Exposes REST endpoints for the frontend to consume
+- Validates incoming requests
+- Handles errors and returns appropriate HTTP status codes
+- Manages CORS for frontend integration
+
+ENDPOINTS:
+- POST /api/sql/analyse - Analyses SQL queries and returns structured results
+- GET /api/sql/health - Health check endpoint
+
+KEY FEATURES:
+- Input validation (ensures query is not empty)
+- Comprehensive error handling with appropriate HTTP status codes
+- JSON request/response handling
+- Cross-origin resource sharing (CORS) enabled
+
+
+4. model/AnalysisResult.java
+---------------------------
+PURPOSE: Data model representing a single analysis result
+RESPONSIBILITIES:
+- Encapsulates analysis data for one category (Efficiency/Best Practices/Cost)
+- Provides structure for JSON serialization/deserialization
+
+PROPERTIES:
+- category: String (e.g., "Efficiency", "Best Practices", "Cost")
+- rating: Rating enum (GREEN, AMBER, RED)
+- text: String containing detailed analysis and recommendations
+
+KEY FEATURES:
+- Jackson annotations for JSON mapping
+- Matches the frontend TypeScript interface exactly
+
+
+5. model/Rating.java
+-------------------
+PURPOSE: Enum representing analysis rating levels
+RESPONSIBILITIES:
+- Defines the three possible rating levels for analysis results
+- Provides string conversion methods for JSON serialization
+
+VALUES:
+- GREEN: Indicates good/optimal performance
+- AMBER: Indicates areas that could be improved
+- RED: Indicates poor/problematic areas
+
+KEY FEATURES:
+- @JsonValue annotation ensures proper JSON serialization
+- fromString() method for parsing AI responses
+- String values match frontend expectations
+
+
+6. model/SqlQueryAnalysisResponse.java
+-------------------------------------
+PURPOSE: Wrapper model for API responses
+RESPONSIBILITIES:
+- Encapsulates the complete response sent to frontend
+- Provides success/failure status and error messaging
+- Contains the list of analysis results
+
+PROPERTIES:
+- results: List<AnalysisResult> - The actual analysis data
+- success: boolean - Indicates if analysis completed successfully  
+- message: String - Success message or error description
+
+KEY FEATURES:
+- Consistent response structure for all API calls
+- Error handling support
+- JSON serialization compatible
+
+
+7. model/SqlQueryRequest.java
+----------------------------
+PURPOSE: Model for incoming API requests
+RESPONSIBILITIES:
+- Encapsulates SQL query data sent from frontend
+- Provides structure for JSON deserialization
+
+PROPERTIES:
+- query: String - The SQL query to be analysed
+
+KEY FEATURES:
+- Simple POJO (Plain Old Java Object)
+- Jackson annotations for JSON mapping
+- Input validation support
+
+
+8. service/SqlQueryAnalysisService.java
+--------------------------------------
+PURPOSE: Core business logic layer for SQL analysis
+RESPONSIBILITIES:
+- Integrates with Ollama AI model using Langchain4j
+- Constructs intelligent prompts for AI analysis
+- Parses AI responses into structured data
+- Handles AI communication errors and provides fallbacks
+
+KEY METHODS:
+- analyseSqlQuery(): Main analysis method that coordinates the entire process
+- buildAnalysisPrompt(): Creates detailed prompts for the AI model
+- parseAiResponse(): Converts AI text responses into structured AnalysisResult objects
+- createFallbackAnalysis(): Provides default analysis if AI parsing fails
+
+KEY FEATURES:
+- Robust error handling with fallback mechanisms
+- JSON response parsing with cleanup (removes markdown formatting)
+- Comprehensive logging for debugging
+- Intelligent prompt engineering for consistent AI responses
+- Temperature control for consistent analysis quality
+
+
+INTEGRATION FLOW
+================
+
+1. Frontend sends POST request to /api/sql/analyse
+2. SqlQueryAnalysisController receives and validates the request
+3. Controller calls SqlQueryAnalysisService.analyseSqlQuery()
+4. Service builds an analysis prompt and sends it to Ollama AI via Langchain4j
+5. AI processes the query and returns analysis text
+6. Service parses the AI response into AnalysisResult objects
+7. Controller wraps results in SqlQueryAnalysisResponse
+8. JSON response is sent back to frontend
+9. Frontend displays the structured analysis results
+
+CONFIGURATION
+============
+
+The application can be configured via application.properties:
+- server.port: Backend server port (default: 8080)
+- ollama.base-url: Ollama server URL (default: http://localhost:11434)
+- ollama.model-name: AI model to use (currently: gemma3:4b)
+- ollama.timeout: Request timeout in seconds (default: 60)
+
+DEPENDENCIES
+===========
+
+- Spring Boot: Web framework and dependency injection
+- Langchain4j: AI model integration and communication
+- Jackson: JSON serialization/deserialization
+- SLF4J: Logging framework
+- Java 17: Runtime environment
