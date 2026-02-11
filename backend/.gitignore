@@ -1,0 +1,33 @@
+# Build artifacts
+target/
+*.jar
+*.war
+*.ear
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Development tools (should be installed globally, not per project)
+apache-maven-*/
+jdk-*/
+*.zip
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Maven wrapper (uncomment if you don't want to commit maven wrapper)
+# .mvn/
+# mvnw
+# mvnw.cmd

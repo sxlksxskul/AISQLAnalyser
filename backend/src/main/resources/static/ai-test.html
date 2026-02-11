@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Model Test - SQL Analyzer</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            max-width: 1000px; 
+            margin: 20px auto; 
+            padding: 20px; 
+            background-color: #f5f5f5;
+        }
+        .container { 
+            background: white; 
+            padding: 30px; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-section { 
+            margin: 20px 0; 
+            border: 1px solid #ddd; 
+            border-radius: 5px; 
+            padding: 20px;
+        }
+        .response { 
+            background-color: #f8f9fa; 
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 15px; 
+            margin: 10px 0;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .error { 
+            background-color: #f8d7da; 
+            border-color: #f5c6cb; 
+            color: #721c24; 
+        }
+        .success { 
+            background-color: #d4edda; 
+            border-color: #c3e6cb; 
+            color: #155724; 
+        }
+        .loading { 
+            background-color: #fff3cd; 
+            border-color: #ffeaa7; 
+            color: #856404; 
+        }
+        textarea { 
+            width: 100%; 
+            min-height: 120px; 
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+        button { 
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px; 
+            margin: 8px 4px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        button:hover { 
+            background-color: #0056b3; 
+        }
+        button:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+        .status { 
+            font-weight: bold; 
+            margin: 10px 0; 
+        }
+        h1 { color: #343a40; }
+        h3 { color: #495057; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 AI Model Integration Test</h1>
+        <p>This page tests the SQL Analyzer backend API and AI model integration.</p>
+        
+        <div class="test-section">
+            <h3>1. Backend Health Check</h3>
+            <button onclick="testHealth()" id="healthBtn">Test Health Endpoint</button>
+            <div id="healthResult" class="response"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>2. AI-Powered SQL Analysis</h3>
+            <p>Enter a SQL query to test the AI model analysis:</p>
+            <textarea id="sqlQuery" placeholder="Enter your SQL query here...">SELECT u.id, u.name, u.email, 
+       COUNT(o.id) as total_orders,
+       SUM(o.amount) as total_spent,
+       AVG(o.amount) as avg_order_value
+FROM users u 
+LEFT JOIN orders o ON u.id = o.user_id 
+WHERE u.created_at >= '2023-01-01' 
+  AND u.status = 'active'
+GROUP BY u.id, u.name, u.email 
+HAVING COUNT(o.id) > 5 
+ORDER BY total_spent DESC, total_orders DESC 
+LIMIT 20;</textarea>
+            <br>
+            <button onclick="testAnalysis()" id="analysisBtn">🔍 Analyze SQL with AI</button>
+            <div id="analysisResult" class="response"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>3. Test Results Summary</h3>
+            <div id="summary" class="status">Run tests to see results...</div>
+        </div>
+    </div>
+
+    <script>
+        let healthPassed = false;
+        let analysisPassed = false;
+
+        function updateSummary() {
+            const summaryDiv = document.getElementById('summary');
+            let message = '';
+            let className = 'status';
+
+            if (healthPassed && analysisPassed) {
+                message = '✅ ALL TESTS PASSED! The AI model is responding correctly.';
+                className += ' success';
+            } else if (healthPassed && !analysisPassed) {
+                message = '⚠️ Backend is healthy, but AI analysis needs checking.';
+                className += ' error';
+            } else if (!healthPassed && !analysisPassed) {
+                message = '❌ Tests not completed or failed. Check the backend connection.';
+                className += ' error';
+            } else {
+                message = '🔄 Tests in progress...';
+                className += ' loading';
+            }
+
+            summaryDiv.textContent = message;
+            summaryDiv.className = className;
+        }
+
+        async function testHealth() {
+            const resultDiv = document.getElementById('healthResult');
+            const btn = document.getElementById('healthBtn');
+            
+            btn.disabled = true;
+            btn.textContent = 'Testing...';
+            resultDiv.className = 'response loading';
+            resultDiv.textContent = '🔄 Checking backend health...';
+            
+            try {
+                const response = await fetch('/actuator/health');
+                const data = await response.json();
+                
+                if (response.ok) {
+                    healthPassed = true;
+                    resultDiv.className = 'response success';
+                    resultDiv.textContent = `✅ Health Check PASSED!\n\nStatus: ${response.status}\nResponse: ${JSON.stringify(data, null, 2)}`;
+                } else {
+                    healthPassed = false;
+                    resultDiv.className = 'response error';
+                    resultDiv.textContent = `❌ Health Check Failed\nStatus: ${response.status}\nResponse: ${JSON.stringify(data, null, 2)}`;
+                }
+            } catch (error) {
+                healthPassed = false;
+                resultDiv.className = 'response error';
+                resultDiv.textContent = `❌ Health Check Error: ${error.message}`;
+            }
+            
+            btn.disabled = false;
+            btn.textContent = 'Test Health Endpoint';
+            updateSummary();
+        }
+
+        async function testAnalysis() {
+            const resultDiv = document.getElementById('analysisResult');
+            const btn = document.getElementById('analysisBtn');
+            const sqlQuery = document.getElementById('sqlQuery').value;
+            
+            if (!sqlQuery.trim()) {
+                resultDiv.className = 'response error';
+                resultDiv.textContent = '❌ Please enter a SQL query to analyze';
+                return;
+            }
+            
+            btn.disabled = true;
+            btn.textContent = 'Analyzing...';
+            resultDiv.className = 'response loading';
+            resultDiv.textContent = '🤖 AI is analyzing your SQL query...\n\nThis may take 10-30 seconds depending on the model response time.';
+            
+            try {
+                const startTime = Date.now();
+                const response = await fetch('/api/sql/analyse', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ query: sqlQuery.trim() })
+                });
+                
+                const endTime = Date.now();
+                const responseTime = ((endTime - startTime) / 1000).toFixed(2);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    analysisPassed = true;
+                    resultDiv.className = 'response success';
+                    resultDiv.textContent = `🎉 AI ANALYSIS SUCCESSFUL!\n\nResponse Time: ${responseTime} seconds\nStatus: ${response.status}\n\n${JSON.stringify(data, null, 2)}`;
+                } else {
+                    analysisPassed = false;
+                    resultDiv.className = 'response error';
+                    resultDiv.textContent = `❌ Analysis Failed\nStatus: ${response.status}\nResponse Time: ${responseTime} seconds\n\n${JSON.stringify(data, null, 2)}`;
+                }
+            } catch (error) {
+                analysisPassed = false;
+                resultDiv.className = 'response error';
+                resultDiv.textContent = `❌ Analysis Error: ${error.message}`;
+            }
+            
+            btn.disabled = false;
+            btn.textContent = '🔍 Analyze SQL with AI';
+            updateSummary();
+        }
+
+        // Auto-run health check when page loads
+        window.addEventListener('load', () => {
+            setTimeout(testHealth, 1000);
+        });
+    </script>
+</body>
+</html>

@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.List;
 
 /**
@@ -82,5 +82,37 @@ public class SqlQueryAnalysisController {
     @GetMapping("/health")
     public ResponseEntity<String> healthCheck() {
         return ResponseEntity.ok("SQL Query Analyser Backend is running");
+    }
+
+    /**
+     * Test endpoint to verify AI model communication.
+     * This will log the full AI conversation to the console.
+     */
+    @GetMapping("/test-ai")
+    public ResponseEntity<String> testAiCommunication() {
+        logger.info("🧪 AI Communication Test Endpoint Called");
+        
+        String testQuery = "SELECT u.name, COUNT(o.id) as order_count FROM users u LEFT JOIN orders o ON u.id = o.user_id GROUP BY u.name ORDER BY order_count DESC LIMIT 5";
+        
+        try {
+            System.out.println("\n" + "🧪".repeat(40));
+            System.out.println("AI COMMUNICATION TEST STARTED");
+            System.out.println("🧪".repeat(40));
+            
+            List<AnalysisResult> results = analysisService.analyseSqlQuery(testQuery);
+            
+            System.out.println("✅ AI COMMUNICATION TEST COMPLETED SUCCESSFULLY");
+            System.out.println("Results count: " + results.size());
+            System.out.println("🧪".repeat(40) + "\n");
+            
+            return ResponseEntity.ok("AI Communication Test Completed! Check console for detailed logs. Results: " + results.size() + " analysis points.");
+        } catch (Exception e) {
+            System.out.println("❌ AI COMMUNICATION TEST FAILED");
+            System.out.println("Error: " + e.getMessage());
+            System.out.println("🧪".repeat(40) + "\n");
+            
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("AI Communication Test Failed: " + e.getMessage());
+        }
     }
 }

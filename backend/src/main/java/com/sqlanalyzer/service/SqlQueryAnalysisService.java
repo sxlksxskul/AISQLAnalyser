@@ -40,10 +40,26 @@ public class SqlQueryAnalysisService {
      */
     public List<AnalysisResult> analyseSqlQuery(String sqlQuery) {
         logger.info("Starting analysis for SQL query: {}", sqlQuery);
+        System.out.println("=".repeat(80));
+        System.out.println("🔍 SQL QUERY ANALYSIS REQUEST");
+        System.out.println("=".repeat(80));
+        System.out.println("Query: " + sqlQuery);
+        System.out.println("-".repeat(80));
 
         try {
             String prompt = buildAnalysisPrompt(sqlQuery);
+            System.out.println("📤 SENDING TO AI MODEL:");
+            System.out.println(prompt);
+            System.out.println("-".repeat(80));
+            
+            System.out.println("🤖 CALLING OLLAMA MODEL...");
+            long startTime = System.currentTimeMillis();
             String aiResponse = chatLanguageModel.generate(prompt);
+            long endTime = System.currentTimeMillis();
+            
+            System.out.println("📥 AI MODEL RESPONSE (took " + (endTime - startTime) + "ms):");
+            System.out.println(aiResponse);
+            System.out.println("=".repeat(80));
             
             logger.debug("AI Response: {}", aiResponse);
             
