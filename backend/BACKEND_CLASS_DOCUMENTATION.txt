@@ -5,7 +5,7 @@ This document explains the purpose and functionality of each Java class in the S
 
 PROJECT STRUCTURE
 -----------------
-backend/src/main/java/com/sqlanalyzer/
+backend/src/main/java/com/sqlanalyser/
 ├── SqlQueryAnalyserApplication.java    # Main application entry point
 ├── config/
 │   └── OllamaConfig.java              # Ollama AI model configuration

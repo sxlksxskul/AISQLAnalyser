@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>AI Model Test - SQL Analyzer</title>
+    <title>AI Model Test - SQL Analyser</title>
     <style>
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
@@ -84,7 +84,7 @@
 <body>
     <div class="container">
         <h1>🤖 AI Model Integration Test</h1>
-        <p>This page tests the SQL Analyzer backend API and AI model integration.</p>
+        <p>This page tests the SQL Analyser backend API and AI model integration.</p>
         
         <div class="test-section">
             <h3>1. Backend Health Check</h3>
@@ -108,7 +108,7 @@ HAVING COUNT(o.id) > 5
 ORDER BY total_spent DESC, total_orders DESC 
 LIMIT 20;</textarea>
             <br>
-            <button onclick="testAnalysis()" id="analysisBtn">🔍 Analyze SQL with AI</button>
+            <button onclick="testAnalysis()" id="analysisBtn">🔍 Analyse SQL with AI</button>
             <div id="analysisResult" class="response"></div>
         </div>
 
@@ -185,14 +185,14 @@ LIMIT 20;</textarea>
             
             if (!sqlQuery.trim()) {
                 resultDiv.className = 'response error';
-                resultDiv.textContent = '❌ Please enter a SQL query to analyze';
+                resultDiv.textContent = '❌ Please enter a SQL query to analyse';
                 return;
             }
             
             btn.disabled = true;
-            btn.textContent = 'Analyzing...';
+            btn.textContent = 'Analysing...';
             resultDiv.className = 'response loading';
-            resultDiv.textContent = '🤖 AI is analyzing your SQL query...\n\nThis may take 10-30 seconds depending on the model response time.';
+            resultDiv.textContent = '🤖 AI is analysing your SQL query...\n\nThis may take 10-30 seconds depending on the model response time.';
             
             try {
                 const startTime = Date.now();
@@ -224,7 +224,7 @@ LIMIT 20;</textarea>
             }
             
             btn.disabled = false;
-            btn.textContent = '🔍 Analyze SQL with AI';
+            btn.textContent = '🔍 Analyse SQL with AI';
             updateSummary();
         }
 

@@ -1,6 +1,6 @@
-# SQL Query Analyzer Backend
+# SQL Query Analyser Backend
 
-This is a Java Spring Boot backend service that analyzes SQL queries using the Ollama AI model via Langchain4j integration.
+This is a Java Spring Boot backend service that analyses SQL queries using the Ollama AI model via Langchain4j integration.
 
 ## Prerequisites
 
@@ -24,8 +24,8 @@ This is a Java Spring Boot backend service that analyzes SQL queries using the O
 
 ```
 backend/
-├── src/main/java/com/sqlanalyzer/
-│   ├── SqlQueryAnalyzerApplication.java     # Main Spring Boot application
+├── src/main/java/com/sqlanalyser/
+│   ├── SqlQueryAnalyserApplication.java     # Main Spring Boot application
 │   ├── config/
 │   │   └── OllamaConfig.java               # Ollama configuration
 │   ├── controller/
@@ -72,9 +72,9 @@ The backend will start on `http://localhost:8080`.
 
 ## API Endpoints
 
-### Analyze SQL Query
+### Analyse SQL Query
 
-**POST** `/api/sql/analyze`
+**POST** `/api/sql/analyse`
 
 Request body:
 ```json
@@ -112,7 +112,7 @@ Response:
 
 **GET** `/api/sql/health`
 
-Response: `SQL Query Analyzer Backend is running`
+Response: `SQL Query Analyser Backend is running`
 
 ## Integration with Frontend
 
@@ -124,7 +124,7 @@ Example integration:
 ```typescript
 const handleAnalyse = async () => {
   try {
-    const response = await fetch('http://localhost:8080/api/sql/analyze', {
+    const response = await fetch('http://localhost:8080/api/sql/analyse', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -138,7 +138,7 @@ const handleAnalyse = async () => {
       setShowResults(true);
     }
   } catch (error) {
-    console.error('Error analyzing query:', error);
+    console.error('Error analysing query:', error);
   }
 };
 ```

@@ -104,7 +104,7 @@ const App: React.FC = () => {
 
   const handleAnalyse = async () => {
     if (!query.trim()) {
-      setError('Please enter a SQL query to analyze');
+      setError('Please enter a SQL query to analyse');
       return;
     }
 
@@ -134,7 +134,7 @@ const App: React.FC = () => {
         throw new Error(data.message || 'Analysis failed');
       }
     } catch (err) {
-      console.error('Error analyzing query:', err);
+      console.error('Error analysing query:', err);
       if (err instanceof Error) {
         setError(`Analysis failed: ${err.message}`);
       } else {
@@ -283,7 +283,7 @@ const App: React.FC = () => {
                     animation: 'spin 1s linear infinite',
                     marginRight: '8px'
                   }}></span>
-                  Analyzing...
+                  Analysing...
                 </>
               ) : (
                 'Analyse Query'
@@ -380,7 +380,7 @@ const App: React.FC = () => {
                 color: '#64748b',
                 lineHeight: '1.5'
               }}>
-                Query performance and optimization strategies
+                Query performance and optimisation strategies
               </p>
             </div>
 
@@ -490,7 +490,7 @@ const App: React.FC = () => {
                 fontSize: '16px',
                 fontWeight: '400'
               }}>
-                AI-powered insights for your SQL query optimization
+                AI-powered insights for your SQL query optimisation
               </p>
             </div>
 

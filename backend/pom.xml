@@ -6,12 +6,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.sqlanalyzer</groupId>
-    <artifactId>sql-query-analyzer-backend</artifactId>
+    <artifactId>sql-query-analyser-backend</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>SQL Query Analyzer Backend</name>
-    <description>Backend service for analyzing SQL queries using Ollama AI via Langchain4j</description>
+    <name>SQL Query Analyser Backend</name>
+    <description>Backend service for analysing SQL queries using Ollama AI via Langchain4j</description>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -68,12 +68,6 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-        </dependency>
-
-        <!-- Validation -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
         <!-- Logging -->
