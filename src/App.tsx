@@ -445,6 +445,37 @@ const App: React.FC = () => {
                 Resource usage and computational expenses
               </p>
             </div>
+
+            <div style={{
+              background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, rgba(239, 68, 68, 0.04) 100%)',
+              border: '1px solid rgba(239, 68, 68, 0.2)',
+              borderRadius: '12px',
+              padding: '16px',
+              transition: 'all 0.2s ease'
+            }}>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                marginBottom: '8px'
+              }}>
+                <span style={{ fontSize: '16px', marginRight: '8px' }}>🔒</span>
+                <strong style={{ 
+                  color: '#dc2626',
+                  fontSize: '16px',
+                  fontWeight: '600'
+                }}>
+                  Security
+                </strong>
+              </div>
+              <p style={{ 
+                margin: '0', 
+                fontSize: '14px', 
+                color: '#64748b',
+                lineHeight: '1.5'
+              }}>
+                SQL injection risks and secure coding practices
+              </p>
+            </div>
           </div>
         </div>
 
