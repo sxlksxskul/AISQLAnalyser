@@ -1,0 +1,243 @@
+/* Result Card Styles */
+.result-card {
+  position: relative;
+  background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.result-card:hover {
+  transform: translateY(-8px) scale(1.02);
+}
+
+/* Green rating styles */
+.result-card.green {
+  border: 2px solid rgba(76, 175, 80, 0.2);
+  box-shadow: 0 8px 32px rgba(76, 175, 80, 0.15), 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.result-card.green:hover {
+  box-shadow: 0 16px 48px rgba(76, 175, 80, 0.25), 0 8px 16px rgba(0,0,0,0.12);
+  border-color: rgba(76, 175, 80, 0.4);
+}
+
+/* Amber rating styles */
+.result-card.amber {
+  border: 2px solid rgba(255, 152, 0, 0.2);
+  box-shadow: 0 8px 32px rgba(255, 152, 0, 0.15), 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.result-card.amber:hover {
+  box-shadow: 0 16px 48px rgba(255, 152, 0, 0.25), 0 8px 16px rgba(0,0,0,0.12);
+  border-color: rgba(255, 152, 0, 0.4);
+}
+
+/* Red rating styles */
+.result-card.red {
+  border: 2px solid rgba(244, 67, 54, 0.2);
+  box-shadow: 0 8px 32px rgba(244, 67, 54, 0.15), 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.result-card.red:hover {
+  box-shadow: 0 16px 48px rgba(244, 67, 54, 0.25), 0 8px 16px rgba(0,0,0,0.12);
+  border-color: rgba(244, 67, 54, 0.4);
+}
+
+/* Background pattern */
+.result-card-bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  transform: translate(30px, -30px);
+}
+
+.result-card.green .result-card-bg {
+  background: radial-gradient(circle, rgba(76, 175, 80, 0.08) 0%, transparent 70%);
+}
+
+.result-card.amber .result-card-bg {
+  background: radial-gradient(circle, rgba(255, 152, 0, 0.08) 0%, transparent 70%);
+}
+
+.result-card.red .result-card-bg {
+  background: radial-gradient(circle, rgba(244, 67, 54, 0.08) 0%, transparent 70%);
+}
+
+/* Category Badge */
+.result-card-category {
+  color: white;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+  z-index: 1;
+}
+
+.result-card.green .result-card-category {
+  background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.result-card.amber .result-card-category {
+  background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+  box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+}
+
+.result-card.red .result-card-category {
+  background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+  box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
+}
+
+/* Icon container */
+.result-card-icon {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  position: relative;
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+
+.result-card.green .result-card-icon {
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.15) 0%, rgba(76, 175, 80, 0.08) 100%);
+  border: 3px solid rgba(76, 175, 80, 0.3);
+}
+
+.result-card.amber .result-card-icon {
+  background: linear-gradient(135deg, rgba(255, 152, 0, 0.15) 0%, rgba(255, 152, 0, 0.08) 100%);
+  border: 3px solid rgba(255, 152, 0, 0.3);
+}
+
+.result-card.red .result-card-icon {
+  background: linear-gradient(135deg, rgba(244, 67, 54, 0.15) 0%, rgba(244, 67, 54, 0.08) 100%);
+  border: 3px solid rgba(244, 67, 54, 0.3);
+}
+
+/* Icon symbols */
+.result-card-symbol {
+  font-size: 48px;
+  font-weight: 900;
+  display: inline-block;
+}
+
+.result-card.green .result-card-symbol {
+  color: #4caf50;
+  animation: pulse 2s infinite;
+}
+
+.result-card.amber .result-card-symbol {
+  color: #ff9800;
+  animation: bounce 2s infinite;
+}
+
+.result-card.red .result-card-symbol {
+  color: #f44336;
+  animation: shake 2s infinite;
+}
+
+/* Status Badge */
+.result-card-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border-radius: 25px;
+  margin-bottom: 20px;
+}
+
+.result-card.green .result-card-status {
+  background-color: rgba(76, 175, 80, 0.1);
+  border: 1px solid rgba(76, 175, 80, 0.3);
+}
+
+.result-card.amber .result-card-status {
+  background-color: rgba(255, 152, 0, 0.1);
+  border: 1px solid rgba(255, 152, 0, 0.3);
+}
+
+.result-card.red .result-card-status {
+  background-color: rgba(244, 67, 54, 0.1);
+  border: 1px solid rgba(244, 67, 54, 0.3);
+}
+
+.result-card-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: glow 2s infinite alternate;
+}
+
+.result-card.green .result-card-status-dot {
+  background-color: #4caf50;
+}
+
+.result-card.amber .result-card-status-dot {
+  background-color: #ff9800;
+}
+
+.result-card.red .result-card-status-dot {
+  background-color: #f44336;
+}
+
+.result-card-status-text {
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.result-card.green .result-card-status-text {
+  color: #4caf50;
+}
+
+.result-card.amber .result-card-status-text {
+  color: #ff9800;
+}
+
+.result-card.red .result-card-status-text {
+  color: #f44336;
+}
+
+/* Description */
+.result-card-description {
+  background: linear-gradient(145deg, #f8fafc 0%, #e2e8f0 100%);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  position: relative;
+  z-index: 1;
+}
+
+.result-card-description p {
+  margin: 0;
+  color: #475569;
+  line-height: 1.7;
+  font-size: 14px;
+  font-weight: 400;
+  text-align: left;
+}
+
+/* Animation delays for staggered entrance */
+.result-card:nth-child(1) { animation: slideInUp 0.6s ease-out 0s both; }
+.result-card:nth-child(2) { animation: slideInUp 0.6s ease-out 0.1s both; }
+.result-card:nth-child(3) { animation: slideInUp 0.6s ease-out 0.2s both; }
+.result-card:nth-child(4) { animation: slideInUp 0.6s ease-out 0.3s both; }
