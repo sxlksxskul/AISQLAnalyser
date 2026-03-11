@@ -3,6 +3,7 @@ import { AnalysisResult } from '../components/ResultCard';
 
 export const useAnalysis = () => {
   const [analysisResults, setAnalysisResults] = useState<AnalysisResult[]>([]);
+  const [improvedQuery, setImprovedQuery] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
   const [showResults, setShowResults] = useState<boolean>(false);
@@ -16,6 +17,7 @@ export const useAnalysis = () => {
     setIsLoading(true);
     setError('');
     setShowResults(false);
+    setImprovedQuery(null);
 
     try {
       const response = await fetch('http://localhost:8080/api/sql/analyse', {
@@ -34,6 +36,7 @@ export const useAnalysis = () => {
 
       if (data.success && data.results) {
         setAnalysisResults(data.results);
+        setImprovedQuery(data.improvedQuery ?? null);
         setShowResults(true);
       } else {
         throw new Error(data.message || 'Analysis failed');
@@ -52,6 +55,7 @@ export const useAnalysis = () => {
 
   return {
     analysisResults,
+    improvedQuery,
     isLoading,
     error,
     showResults,

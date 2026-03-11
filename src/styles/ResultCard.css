@@ -1,3 +1,38 @@
+/* Improved Query Section */
+.improved-query-container {
+  margin-top: 32px;
+  background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  animation: fadeInUp 0.5s ease both;
+}
+
+.improved-query-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #7dd3fc;
+  margin: 0 0 16px 0;
+  letter-spacing: 0.02em;
+}
+
+.improved-query-code {
+  margin: 0;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(125, 211, 252, 0.2);
+  border-radius: 10px;
+  padding: 20px;
+  overflow-x: auto;
+}
+
+.improved-query-code code {
+  font-family: 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+  font-size: 0.9rem;
+  color: #e2e8f0;
+  white-space: pre;
+  line-height: 1.7;
+}
+
 /* Result Card Styles */
 .result-card {
   position: relative;

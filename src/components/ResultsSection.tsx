@@ -3,9 +3,10 @@ import ResultCard, { AnalysisResult } from './ResultCard';
 
 interface ResultsSectionProps {
   results: AnalysisResult[];
+  improvedQuery?: string | null;
 }
 
-const ResultsSection: React.FC<ResultsSectionProps> = ({ results }) => {
+const ResultsSection: React.FC<ResultsSectionProps> = ({ results, improvedQuery }) => {
   return (
     <div className="results-container">
       <div className="results-header">
@@ -22,6 +23,15 @@ const ResultsSection: React.FC<ResultsSectionProps> = ({ results }) => {
           <ResultCard key={index} result={result} index={index} />
         ))}
       </div>
+
+      {improvedQuery && (
+        <div className="improved-query-container">
+          <h3 className="improved-query-title">⚡ Optimised Query</h3>
+          <pre className="improved-query-code">
+            <code>{improvedQuery}</code>
+          </pre>
+        </div>
+      )}
     </div>
   );
 };

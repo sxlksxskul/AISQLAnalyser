@@ -12,7 +12,7 @@ import { useAnalysis } from './hooks/useAnalysis';
 
 const App: React.FC = () => {
   const [query, setQuery] = useState<string>('');
-  const { analysisResults, isLoading, error, showResults, analyseQuery } = useAnalysis();
+  const { analysisResults, improvedQuery, isLoading, error, showResults, analyseQuery } = useAnalysis();
 
   const handleAnalyse = () => {
     analyseQuery(query);
@@ -34,7 +34,7 @@ const App: React.FC = () => {
         
         {error && <ErrorMessage message={error} />}
         
-        {showResults && <ResultsSection results={analysisResults} />}
+        {showResults && <ResultsSection results={analysisResults} improvedQuery={improvedQuery} />}
       </main>
       
       <Footer />

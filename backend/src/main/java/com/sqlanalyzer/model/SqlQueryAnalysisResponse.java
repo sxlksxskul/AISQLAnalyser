@@ -16,6 +16,9 @@ public class SqlQueryAnalysisResponse {
     
     @JsonProperty("message")
     private String message;
+
+    @JsonProperty("improvedQuery")
+    private String improvedQuery;
     
     public SqlQueryAnalysisResponse() {}
     
@@ -47,5 +50,13 @@ public class SqlQueryAnalysisResponse {
     
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getImprovedQuery() {
+        return improvedQuery;
+    }
+
+    public void setImprovedQuery(String improvedQuery) {
+        this.improvedQuery = improvedQuery;
     }
 }

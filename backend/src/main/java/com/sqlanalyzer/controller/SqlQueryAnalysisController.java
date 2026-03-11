@@ -4,6 +4,7 @@ import com.sqlanalyzer.model.AnalysisResult;
 import com.sqlanalyzer.model.SqlQueryAnalysisResponse;
 import com.sqlanalyzer.model.SqlQueryRequest;
 import com.sqlanalyzer.service.SqlQueryAnalysisService;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
-import java.util.List;
 
 /**
  * REST Controller for handling SQL query analysis requests.
@@ -49,13 +49,9 @@ public class SqlQueryAnalysisController {
             }
 
             // Perform analysis
-            List<AnalysisResult> results = analysisService.analyseSqlQuery(request.getQuery());
-            
-            SqlQueryAnalysisResponse response = new SqlQueryAnalysisResponse(
-                results, 
-                true, 
-                "Analysis completed successfully"
-            );
+            SqlQueryAnalysisResponse response = analysisService.analyseSqlQuery(request.getQuery());
+            response.setSuccess(true);
+            response.setMessage("Analysis completed successfully");
 
             logger.info("SQL query analysis completed successfully");
             return ResponseEntity.ok(response);
@@ -99,10 +95,11 @@ public class SqlQueryAnalysisController {
             System.out.println("AI COMMUNICATION TEST STARTED");
             System.out.println("🧪".repeat(40));
             
-            List<AnalysisResult> results = analysisService.analyseSqlQuery(testQuery);
+            SqlQueryAnalysisResponse testResponse = analysisService.analyseSqlQuery(testQuery);
+            List<AnalysisResult> results = testResponse.getResults();
             
             System.out.println("✅ AI COMMUNICATION TEST COMPLETED SUCCESSFULLY");
-            System.out.println("Results count: " + results.size());
+            System.out.println("Results count: " + (results != null ? results.size() : 0));
             System.out.println("🧪".repeat(40) + "\n");
             
             return ResponseEntity.ok("AI Communication Test Completed! Check console for detailed logs. Results: " + results.size() + " analysis points.");
