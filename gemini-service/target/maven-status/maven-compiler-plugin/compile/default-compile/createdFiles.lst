@@ -1,0 +1,9 @@
+com\sqlanalyzer\config\GeminiConfig.class
+com\sqlanalyzer\model\SqlQueryRequest.class
+com\sqlanalyzer\config\GeminiConfig$1.class
+com\sqlanalyzer\model\SqlQueryAnalysisResponse.class
+com\sqlanalyzer\service\SqlQueryAnalysisService.class
+com\sqlanalyzer\model\AnalysisResult.class
+com\sqlanalyzer\model\Rating.class
+com\sqlanalyzer\GeminiAnalyserApplication.class
+com\sqlanalyzer\controller\SqlQueryAnalysisController.class

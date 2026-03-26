@@ -1,6 +1,13 @@
 import { useState } from 'react';
 import { AnalysisResult } from '../components/ResultCard';
 
+export type AnalysisMode = 'local' | 'online';
+
+const ENDPOINTS: Record<AnalysisMode, string> = {
+  local: 'http://localhost:8080/api/sql/analyse',
+  online: 'http://localhost:9090/api/sql/analyse',
+};
+
 export const useAnalysis = () => {
   const [analysisResults, setAnalysisResults] = useState<AnalysisResult[]>([]);
   const [improvedQuery, setImprovedQuery] = useState<string | null>(null);
@@ -8,7 +15,7 @@ export const useAnalysis = () => {
   const [error, setError] = useState<string>('');
   const [showResults, setShowResults] = useState<boolean>(false);
 
-  const analyseQuery = async (query: string) => {
+  const analyseQuery = async (query: string, mode: AnalysisMode = 'local') => {
     if (!query.trim()) {
       setError('Please enter a SQL query to analyse');
       return;
@@ -20,7 +27,7 @@ export const useAnalysis = () => {
     setImprovedQuery(null);
 
     try {
-      const response = await fetch('http://localhost:8080/api/sql/analyse', {
+      const response = await fetch(ENDPOINTS[mode], {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

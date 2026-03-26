@@ -12,10 +12,11 @@ import { useAnalysis } from './hooks/useAnalysis';
 
 const App: React.FC = () => {
   const [query, setQuery] = useState<string>('');
+  const [mode, setMode] = useState<'local' | 'online'>('local');
   const { analysisResults, improvedQuery, isLoading, error, showResults, analyseQuery } = useAnalysis();
 
   const handleAnalyse = () => {
-    analyseQuery(query);
+    analyseQuery(query, mode);
   };
 
   return (
@@ -28,6 +29,8 @@ const App: React.FC = () => {
           setQuery={setQuery}
           onAnalyse={handleAnalyse}
           isLoading={isLoading}
+          mode={mode}
+          setMode={setMode}
         />
         
         <CategoriesInfo />

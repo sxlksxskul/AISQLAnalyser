@@ -60,7 +60,16 @@ public class SqlQueryAnalysisService {
             3. NEGATIVE CONSTRAINT: Only report errors actually present. Do not repeat errors from the demonstrations if they do not exist in the user's query.
 
             ### DATABASE SCHEMA CONTEXT:
-            [CLUB, TRAINER, ATHLETE, MEDICAL_CLEARANCE, JUDGE, COMPETITION, ATHLETE_COMPETITION, JUDGE_COMPETITION]
+            The following tables are available in the system:
+            - CLUB (id, name, city, address, email, contact, website)
+            - TRAINER (BIB, first_name, last_name, date_of_birth, phone_number, club_id)
+            - TRAINER_LICENSE (id, type, description, trainer_BIB)
+            - ATHLETE (BIB, first_name, last_name, date_of_birth, club_id)
+            - MEDICAL_CLEARANCE (id, exam_date, expiration_date, comment, athlete_BIB)
+            - JUDGE (BIB, first_name, last_name, date_of_birth)
+            - COMPETITION (id, name, date, location, category, competition_format, competition_capacity, competition_director, entry_fee, club_id)
+            - ATHLETE_COMPETITION (athlete_BIB, competition_id, category, qualification_result, rank_achieved)
+            - JUDGE_COMPETITION (judge_BIB, competition_id, report)
 
             ### DEMONSTRATIONS (CoT-Delivering Examples):
 
