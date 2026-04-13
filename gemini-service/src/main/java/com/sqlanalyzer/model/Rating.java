@@ -8,7 +8,8 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum Rating {
     GREEN("green"),
     AMBER("amber"),
-    RED("red");
+    RED("red"),
+    CRITICAL("critical");
     
     private final String value;
     

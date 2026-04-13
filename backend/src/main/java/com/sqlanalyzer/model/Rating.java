@@ -22,11 +22,32 @@ public enum Rating {
     }
     
     public static Rating fromString(String value) {
+        // Handle null or empty values
+        if (value == null || value.isEmpty()) {
+            return AMBER; // Default to AMBER
+        }
+        
+        String lowerValue = value.toLowerCase().trim();
+        
+        // Try exact match first
         for (Rating rating : Rating.values()) {
-            if (rating.value.equalsIgnoreCase(value)) {
+            if (rating.value.equalsIgnoreCase(lowerValue)) {
                 return rating;
             }
         }
-        throw new IllegalArgumentException("No constant with value " + value + " found");
+        
+        // Try to match partial/similar values
+        if (lowerValue.contains("green") || lowerValue.contains("pass") || lowerValue.contains("good")) {
+            return GREEN;
+        }
+        if (lowerValue.contains("red") || lowerValue.contains("fail") || lowerValue.contains("critical")) {
+            return RED;
+        }
+        if (lowerValue.contains("yellow") || lowerValue.contains("warn") || lowerValue.contains("amber") || lowerValue.contains("caution")) {
+            return AMBER;
+        }
+        
+        // Default to AMBER if no match found
+        return AMBER;
     }
 }

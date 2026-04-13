@@ -7,6 +7,8 @@ import com.sqlanalyzer.model.AnalysisResult;
 import com.sqlanalyzer.model.Rating;
 import com.sqlanalyzer.model.SqlQueryAnalysisResponse;
 import dev.langchain4j.model.chat.ChatLanguageModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,8 @@ import java.util.List;
  */
 @Service
 public class SqlQueryAnalysisService {
+
+    private static final Logger logger = LoggerFactory.getLogger(SqlQueryAnalysisService.class);
 
     private final ChatLanguageModel chatLanguageModel;
     private final ObjectMapper objectMapper;
@@ -117,7 +121,9 @@ public class SqlQueryAnalysisService {
      */
     private SqlQueryAnalysisResponse parseAiResponse(String aiResponse) {
         try {
+            logger.debug("RAW AI RESPONSE FROM GEMINI: {}", aiResponse);
             String cleanedResponse = cleanJsonResponse(aiResponse);
+            logger.debug("CLEANED JSON RESPONSE: {}", cleanedResponse);
             JsonNode root = objectMapper.readTree(cleanedResponse);
             List<AnalysisResult> results = new ArrayList<>();
 
@@ -140,7 +146,8 @@ public class SqlQueryAnalysisService {
                 }
             }
 
-            if (results.size() != 4) {
+            // Return whatever was parsed, even if less than 4 categories
+            if (results.isEmpty()) {
                 return createFallbackAnalysis();
             }
 
@@ -150,6 +157,7 @@ public class SqlQueryAnalysisService {
             return response;
 
         } catch (JsonProcessingException e) {
+            logger.error("ERROR PARSING GEMINI AI RESPONSE: {}", e.getMessage(), e);
             return createFallbackAnalysis();
         }
     }
